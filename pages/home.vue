@@ -1,9 +1,13 @@
 <script setup lang="ts">
+const localePath = useLocalePath()
 </script>
 
 <template>
-    <div>
-        <h1 class="flex">Home</h1>
+    <div class="flex flex-col items-center justify-center">
+        <h1 class="flex">{{ $t('home') }}</h1>
+        <AtomsButton :label="$t('go_to_about')" @click="() => {
+            useRouter().push(localePath('/about'))
+        }" />
     </div>
     <div>
         <MoleculesFooter />
