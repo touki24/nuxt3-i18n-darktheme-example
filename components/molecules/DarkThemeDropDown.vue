@@ -1,49 +1,73 @@
 <script setup lang="ts">
-const props = defineProps({
-    label: { type: String }
-})
-
-var selectedTheme: String = "system"
+import { ref, watch, onMounted } from 'vue'
+import { AppTheme } from '../../enums/app-theme'
 
 const items = [
     [{
         icon: 'i-heroicons-sun',
         label: 'Light',
         click: () => {
-            selectedTheme = "light"
+            setTheme(AppTheme.Light)
         }
     }],
     [{
         icon: 'i-heroicons-moon',
         label: 'Dark',
         click: () => {
-            selectedTheme = "dark"
+            setTheme(AppTheme.Dark)
         }
     }],
     [{
         icon: 'i-heroicons-computer-desktop',
         label: 'System',
         click: () => {
-            selectedTheme = "system"
+            setTheme(AppTheme.System)
         }
     }]
 ]
 
-function resolveIcon(selectedTheme: String) {
-    if (selectedTheme === "light") {
-        return "i-heroicons-sun"
-    }
-
-    if (selectedTheme === "dark") {
-        return "i-heroicons-moon"
-    }
-
-    return "i-heroicons-computer-desktop"
+const setTheme = (theme: AppTheme) => {
+    useColorMode().preference = theme
 }
+
+const getTheme = () => {
+    return useColorMode().preference
+}
+
+const getIconBasedOnTheme = (theme: AppTheme) => {
+    switch (theme) {
+        case AppTheme.Light:
+            return "i-heroicons-sun"
+        case AppTheme.Dark:
+            return "i-heroicons-moon"
+        default:
+            return "i-heroicons-computer-desktop"
+    }
+}
+
+const icon = ref('')
+
+watch(getTheme, (newTheme) => {
+    icon.value = getIconBasedOnTheme(newTheme as AppTheme);
+})
+
+onMounted(() => {
+    icon.value = getIconBasedOnTheme(getTheme() as AppTheme)
+})
+
 </script>
 
 <template>
-    <UDropdown :items="items" mode="click" :popper="{ placement: 'bottom-start' }">
-        <UButton color="white" :trailing-icon="resolveIcon(selectedTheme)" />
+    <UDropdown v-if="icon !== ''" :items="items" mode="click" :popper="{ placement: 'bottom-start' }">
+        <UButton color="white" :trailing-icon="icon" />
+        <template #item="{ item }">
+            <UIcon v-if="item.icon == icon" :name="item.icon"
+                class="flex-shrink-0 h-5 w-5 text-red-700 dark:text-red-300" />
+            <UIcon v-else :name="item.icon" class="flex-shrink-0 h-5 w-5 text-gray-400 dark:text-gray-500" />
+
+            <span v-if="item.icon == icon" class="font-semibold truncate ms-1 text-red-700 dark:text-red-300">{{ item.label
+            }}</span>
+            <span v-else class="truncate ms-1">{{ item.label }}</span>
+        </template>
     </UDropdown>
 </template>
