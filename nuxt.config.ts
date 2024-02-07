@@ -16,7 +16,7 @@ export default defineNuxtConfig({
     defaultLocale: 'id',
     locales: [
       {
-        name: 'Indonedia',
+        name: 'Indonesia',
         code: 'id',
         iso: 'id',
         file: 'id.ts'
