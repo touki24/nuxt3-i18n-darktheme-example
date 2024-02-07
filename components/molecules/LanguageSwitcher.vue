@@ -1,7 +1,12 @@
 <script setup lang="ts">
-const { locales, locale, setLocale } = useI18n()
+const { locales, locale, setLocale } = useI18n();
 
-const languages: any[][] = locales.value.map(item => [{
+const cachedLocales = ref(locales.value);
+watch(locales, (newValue) => {
+    cachedLocales.value = newValue;
+});
+
+const languages: any[][] = cachedLocales.value.map(item => [{
     label: item.name,
     click: () => {
         setLocale(item.code)
@@ -9,10 +14,10 @@ const languages: any[][] = locales.value.map(item => [{
 }])
 
 const languageName = computed(() => {
-    const lang = locales.value.find(item => item.code == locale.value)
-    return lang?.name || "Language"
-})
-
+    const { name = locale.value === 'en' ? 'Language' : 'Indonesia' } =
+        cachedLocales.value.find((item) => item.code === locale.value) || {};
+    return name;
+});
 
 </script>
 
