@@ -1,6 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import initializeTranslation from "./scripts/initializeTranslation"
-import locales from './i18n/locales'
+import initializeTranslation from './scripts/initializeTranslation'
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
@@ -17,14 +16,19 @@ export default defineNuxtConfig({
       initializeTranslation()
     }
   },
-  i18n: {
-    vueI18n: './i18n/i18n.config.ts',
-    strategy: 'no_prefix',
-    detectBrowserLanguage: {
-      useCookie: true,
-      cookieKey: 'i18n_redirected',
-      redirectOn: 'root',  // recommended
-    },
-    locales: locales
+  // i18n: {
+  //   strategy: 'no_prefix',
+  //   detectBrowserLanguage: {
+  //     useCookie: true,
+  //     cookieKey: 'i18n_redirected',
+  //     redirectOn: 'root',
+  //   },
+  // lazy: true,
+  // defaultLocale: 'en',
+  // langDir: 'i18n/sources',
+  // locales: locales
+  // },
+  pinia: {
+    storesDirs: ['./stores/**'],
   }
 })

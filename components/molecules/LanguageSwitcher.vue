@@ -1,28 +1,30 @@
 <script setup lang="ts">
-const { locales, locale, setLocale } = useI18n();
+import locales from '@/i18n/locales'
 
-const cachedLocales = ref(locales.value);
-watch(locales, (newValue) => {
-    cachedLocales.value = newValue;
-});
+const { locale, fallbackLocale } = useI18n()
+const store = useI18nStore()
 
-const languages: any[][] = cachedLocales.value.map(item => [{
+const languages: any[][] = locales.map(item => [{
     label: item.name,
     click: () => {
-        setLocale(item.code)
+        locale.value = item.code
+        fallbackLocale.value = item.code
+        store.setLocale(item.code)
+        store.setFallbackLocale(item.code)
     }
 }])
 
+
 const languageName = computed(() => {
-    const { name = locale.value === 'en' ? 'Language' : 'Indonesia' } =
-        cachedLocales.value.find((item) => item.code === locale.value) || {};
-    return name;
-});
+    const selectedLocale = locale.value
+    const { name = undefined } = locales.find((item) => item.code === selectedLocale) || {}
+    return name
+})
 
 </script>
 
 <template>
-    <UDropdown :items="languages" mode="click">
+    <UDropdown v-if="languageName" :items="languages" mode="click">
         <UButton color="white" :label="languageName" />
     </UDropdown>
 </template>

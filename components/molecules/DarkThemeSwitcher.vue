@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { ref, watch, onMounted } from 'vue'
-import { AppTheme } from '../../enums/app-theme'
+
+enum AppTheme {
+    Light = "light",
+    Dark = "dark",
+    System = "system"
+}
 
 const items = [
     [{

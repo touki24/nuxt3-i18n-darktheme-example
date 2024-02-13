@@ -1,4 +1,10 @@
 {
+    "locale": {
+        "name": "English",
+        "code": "en",
+        "iso": "en",
+        "file": "en.json"
+    },
     "hello": "Hello {name}",
     "home": "Home",
     "about": "About",

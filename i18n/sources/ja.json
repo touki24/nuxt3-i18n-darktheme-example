@@ -1,7 +1,13 @@
 {
+    "locale": {
+        "name": "Japanese",
+        "code": "ja",
+        "iso": "ja",
+        "file": "ja.json"
+    },
     "hello": "Koniciwa {name}",
-    "home": "Home",
-    "about": "About",
-    "goToHome": "Go to Home",
-    "goToAbout": "Go to About"
+    "home": "Beranda",
+    "about": "Tentang Jepang",
+    "goToHome": "Pergi ke Beranda",
+    "goToAbout": "Pergi ke Tentang"
 }

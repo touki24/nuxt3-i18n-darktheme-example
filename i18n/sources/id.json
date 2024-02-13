@@ -1,4 +1,10 @@
 {
+    "locale": {
+        "name": "Indonesia",
+        "code": "id",
+        "iso": "id",
+        "file": "id.json"
+    },
     "hello": "Halo {name}",
     "home": "Beranda",
     "about": "Tentang",
