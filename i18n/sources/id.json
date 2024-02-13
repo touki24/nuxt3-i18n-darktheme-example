@@ -1,0 +1,7 @@
+{
+    "hello": "Halo {name}",
+    "home": "Beranda",
+    "about": "Tentang",
+    "goToHome": "Pergi ke Beranda",
+    "goToAbout": "Pergi ke Tentang"
+}

@@ -1,4 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import initializeTranslation from "./scripts/initializeTranslation"
+import locales from './i18n/locales'
+
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
@@ -9,24 +12,19 @@ export default defineNuxtConfig({
   colorMode: {
     classSuffix: ''
   },
+  hooks: {
+    'build:before': () => {
+      initializeTranslation()
+    }
+  },
   i18n: {
-    strategy: 'prefix_except_default',
-    lazy: true,
-    langDir: 'lang',
-    defaultLocale: 'id',
-    locales: [
-      {
-        name: 'Indonesia',
-        code: 'id',
-        iso: 'id',
-        file: 'id.ts'
-      },
-      {
-        name: 'English',
-        code: 'en',
-        iso: 'en',
-        file: 'en.ts'
-      }
-    ]
+    vueI18n: './i18n/i18n.config.ts',
+    strategy: 'no_prefix',
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      redirectOn: 'root',  // recommended
+    },
+    locales: locales
   }
 })
