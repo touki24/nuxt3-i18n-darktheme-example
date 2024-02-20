@@ -4,7 +4,7 @@ const { t } = useI18n()
 
 <template>
     <div class="flex flex-col items-center justify-center">
-        <h1 class="flex">{{ t('goToAbout') }}</h1>
+        <h1 class="flex">{{ t('home') }}</h1>
         <span>{{ t('hello', { name: 'Touki' }) }}</span>
         <AtomsButton :label="t('goToAbout')" @click="() => {
             useRouter().push('/about')

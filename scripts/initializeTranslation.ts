@@ -2,42 +2,19 @@ import fs from 'fs'
 import path from 'path'
 import type { Locale } from '~/interfaces/Locale'
 
+const sourcesDir = path.join(__dirname, '../i18n', 'sources')
+
 export default async function initializeTranslation() {
-    const { messages, locales } = await generateLocalesAndMessages()
-    await createMessages(messages)
-    await createLocales(locales)
+    const sourceFiles = await readSource()
+    const locales = await createLocales(sourceFiles)
+    await createMessages(locales)
 }
 
-async function createLocales(locales: Locale[]) {
-    const localesContent =
-        `export default ${JSON.stringify(locales, null, 2)}
-        `
-
-    const i18nPath = path.resolve(__dirname, '../i18n');
-    fs.mkdirSync(i18nPath, { recursive: true })
-    fs.writeFileSync(path.join(i18nPath, 'locales.ts'), localesContent)
+async function readSource() {
+    return await fs.promises.readdir(sourcesDir)
 }
 
-async function createMessages(messages: Messages) {
-    const messagesContent =
-        `export default ${JSON.stringify(messages, null, 2)}
-        `
-    const i18nPath = path.resolve(__dirname, '../i18n')
-    fs.mkdirSync(i18nPath, { recursive: true })
-    fs.writeFileSync(path.join(i18nPath, 'messages.ts'), messagesContent)
-}
-
-
-interface Messages {
-    [key: string]: any
-}
-
-
-async function generateLocalesAndMessages() {
-    const sourcesDir = path.join(__dirname, '../i18n', 'sources')
-    const files = await fs.promises.readdir(sourcesDir)
-
-    const messages: Messages = {}
+async function createLocales(files: string[]) {
     const locales: Locale[] = []
 
     for (const file of files) {
@@ -54,25 +31,53 @@ async function generateLocalesAndMessages() {
             }
 
             // Extract and add locale data
-            messages[jsonData.locale.code] = jsonData
-
             locales.push({
                 name: jsonData.locale.name,
                 code: jsonData.locale.code,
                 iso: jsonData.locale.iso,
                 file: jsonData.locale.file
-            });
+            })
         } catch (error) {
             console.error(`Error reading ${file}:`, error)
         }
     }
 
-    console.log('Message created: ' + JSON.stringify(messages, null, 2))
 
-    return {
-        messages: messages,
-        locales: locales
+    const localesContent =
+        `export default ${JSON.stringify(locales, null, 2)}
+        `
+
+    const i18nPath = path.resolve(__dirname, '../i18n');
+    fs.mkdirSync(i18nPath, { recursive: true })
+    fs.writeFileSync(path.join(i18nPath, 'locales.ts'), localesContent)
+    console.log('Locales created: ' + JSON.stringify(locales, null, 2))
+
+    return locales
+}
+
+async function createMessages(locales: Locale[]) {
+
+    const imports: string[] = []
+    const messages: string[] = []
+
+    for (const locale of locales) {
+        imports.push(`import ${locale.code} from './sources/${locale.file}'`)
+        messages.push(`${locale.code}: ${locale.code}`)
     }
+
+    const messagesContent =
+        `${imports.join('\n')}
+
+export default {
+    ${messages.join(',\n\t')}
+}
+    `
+
+    const i18nPath = path.resolve(__dirname, '../i18n')
+    fs.mkdirSync(i18nPath, { recursive: true })
+    fs.writeFileSync(path.join(i18nPath, 'messages.ts'), messagesContent)
+
+    console.log('Messages created: ' + messagesContent)
 }
 
 function isLocale(obj: any): obj is Locale {

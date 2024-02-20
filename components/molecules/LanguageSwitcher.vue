@@ -15,14 +15,14 @@ const languages: any[][] = locales.map(item => [{
 
 const languageName = computed(() => {
     const selectedLocale = locale.value
-    const { name = undefined } = locales.find((item) => item.code === selectedLocale) || {}
+    const { name = 'Select Language' } = locales.find((item) => item.code === selectedLocale) || {}
     return name
 })
 
 </script>
 
 <template>
-    <UDropdown v-if="languageName" :items="languages" mode="click">
+    <UDropdown :items="languages" mode="click">
         <UButton color="white" :label="languageName" />
     </UDropdown>
 </template>
