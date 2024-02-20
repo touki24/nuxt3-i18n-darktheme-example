@@ -15,18 +15,13 @@ export const useI18nStore = defineStore('i18n_store', {
     },
     getters: {
         getLocale() {
-            return localStorage.getItem('app-locale') || ''
+            return useCookie('locale_cookie').value || 'en'
         },
-        getFallbackLocale() {
-            return localStorage.getItem('app-fallback-locale') || ''
-        }
+
     },
     actions: {
         setLocale(locale: string) {
-            localStorage.setItem('app-locale', locale)
-        },
-        setFallbackLocale(fallbackLocale: string) {
-            localStorage.setItem('app-fallback-locale', fallbackLocale)
+            useCookie('locale_cookie').value = locale
         }
     }
 })

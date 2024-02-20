@@ -1,16 +1,14 @@
 <script setup lang="ts">
 import locales from '@/i18n/locales'
 
-const { locale, fallbackLocale } = useI18n()
+const { locale } = useI18n()
 const store = useI18nStore()
 
 const languages: any[][] = locales.map(item => [{
     label: item.name,
     click: () => {
         locale.value = item.code
-        fallbackLocale.value = item.code
         store.setLocale(item.code)
-        store.setFallbackLocale(item.code)
     }
 }])
 
