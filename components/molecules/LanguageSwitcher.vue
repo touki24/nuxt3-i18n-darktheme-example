@@ -9,7 +9,8 @@ const setLocale = (newLocale: string) => {
 }
 
 const getLocale = () => {
-    return useCookie('locale_cookie').value || 'en'
+    const localeCookie = useCookie('locale_cookie')
+    return localeCookie.value || 'en'
 }
 
 const languages: any[][] = locales.map(item => [{
@@ -22,7 +23,7 @@ const languages: any[][] = locales.map(item => [{
 
 const languageName = computed(() => {
     const selectedLocale = locale.value
-    const { name = 'Select Language' } = locales.find((item) => item.code === selectedLocale) || {}
+    const { name = 'English' } = locales.find((item) => item.code === selectedLocale) || {}
     return name
 })
 

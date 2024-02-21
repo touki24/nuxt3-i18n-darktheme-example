@@ -1,8 +1,5 @@
 import fs from 'fs'
 import path from 'path'
-import unzipper from 'unzipper'
-import { Readable } from 'stream'
-import { finished } from 'stream/promises'
 
 import type { Locale } from '~/interfaces/Locale'
 
