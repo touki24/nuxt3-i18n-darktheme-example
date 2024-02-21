@@ -13,14 +13,11 @@
   "dependencies": {
     "@nuxt/ui": "^2.13.0",
     "nuxt": "^3.10.1",
-    "unzipper": "^0.10.14",
     "vue": "^3.4.15",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
     "@nuxtjs/dotenv": "^1.4.2",
-    "@nuxtjs/i18n": "^8.0.2",
-    "@pinia/nuxt": "^0.5.1",
-    "@types/unzipper": "^0.10.6"
+    "@nuxtjs/i18n": "^8.0.2"
   }
 }
