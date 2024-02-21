@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "start": "nuxt start",
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
@@ -13,10 +14,12 @@
     "@nuxt/ui": "^2.13.0",
     "nuxt": "^3.10.1",
     "vue": "^3.4.15",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.2.5",
+    "unzipper": "^0.10.14"
   },
   "devDependencies": {
     "@nuxtjs/i18n": "^8.0.2",
-    "@pinia/nuxt": "^0.5.1"
+    "@pinia/nuxt": "^0.5.1",
+    "@types/unzipper": "^0.10.6"
   }
 }

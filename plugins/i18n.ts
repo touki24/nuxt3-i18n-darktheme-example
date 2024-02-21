@@ -4,7 +4,7 @@ import messages from '@/i18n/messages'
 
 type MessageSchema = typeof en
 
-export default defineNuxtPlugin((nuxtApp) => {
+export default defineNuxtPlugin(({ vueApp }) => {
     const localeCookie = useCookie('locale_cookie')
     const selectedLocale = localeCookie.value || 'en'
     const i18n = createI18n<[MessageSchema], 'en'>({
@@ -16,5 +16,5 @@ export default defineNuxtPlugin((nuxtApp) => {
         messages: messages
     })
 
-    nuxtApp.vueApp.use(i18n)
+    vueApp.use(i18n)
 })

@@ -32,6 +32,7 @@ const items = [
 ]
 
 const setTheme = (theme: AppTheme) => {
+    useCookie('dark_theme_cookie').value = theme
     useColorMode().preference = theme
 }
 
@@ -50,7 +51,8 @@ const getIconBasedOnTheme = (theme: AppTheme) => {
     }
 }
 
-const icon = ref('')
+const darkThemeFromCookie = useCookie('dark_theme_cookie').value || 'en'
+const icon = ref(darkThemeFromCookie)
 
 watch(getTheme, (newTheme) => {
     icon.value = getIconBasedOnTheme(newTheme as AppTheme);
@@ -63,7 +65,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <UDropdown v-if="icon !== ''" :items="items" mode="click" :popper="{ placement: 'bottom-start' }">
+    <UDropdown :items="items" mode="click" :popper="{ placement: 'bottom-start' }">
         <UButton color="white" :trailing-icon="icon" />
         <template #item="{ item }">
             <UIcon v-if="item.icon == icon" :name="item.icon"

@@ -16,18 +16,6 @@ export default defineNuxtConfig({
       initializeTranslation()
     }
   },
-  // i18n: {
-  //   strategy: 'no_prefix',
-  //   detectBrowserLanguage: {
-  //     useCookie: true,
-  //     cookieKey: 'i18n_redirected',
-  //     redirectOn: 'root',
-  //   },
-  // lazy: true,
-  // defaultLocale: 'en',
-  // langDir: 'i18n/sources',
-  // locales: locales
-  // },
   pinia: {
     storesDirs: ['./stores/**'],
   }

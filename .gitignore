@@ -23,4 +23,6 @@ logs
 .env.*
 !.env.example
 
-i18n
+i18n/sources/*
+i18n/messages.ts
+i18n/locales.ts

@@ -1,5 +1,9 @@
 import fs from 'fs'
 import path from 'path'
+import unzipper from 'unzipper'
+import { Readable } from 'stream'
+import { finished } from 'stream/promises'
+
 import type { Locale } from '~/interfaces/Locale'
 
 const sourcesDir = path.join(__dirname, '../i18n', 'sources')
@@ -49,7 +53,7 @@ async function createLocales(files: string[]) {
 
     const i18nPath = path.resolve(__dirname, '../i18n');
     fs.mkdirSync(i18nPath, { recursive: true })
-    fs.writeFileSync(path.join(i18nPath, 'locales.ts'), localesContent)
+    fs.writeFileSync(path.join(i18nPath, 'locales.ts'), localesContent.trim())
     console.log('Locales created: ' + JSON.stringify(locales, null, 2))
 
     return locales
@@ -75,7 +79,7 @@ export default {
 
     const i18nPath = path.resolve(__dirname, '../i18n')
     fs.mkdirSync(i18nPath, { recursive: true })
-    fs.writeFileSync(path.join(i18nPath, 'messages.ts'), messagesContent)
+    fs.writeFileSync(path.join(i18nPath, 'messages.ts'), messagesContent.trim())
 
     console.log('Messages created: ' + messagesContent)
 }
