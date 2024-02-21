@@ -51,8 +51,8 @@ const getIconBasedOnTheme = (theme: AppTheme) => {
     }
 }
 
-const darkThemeFromCookie = useCookie('dark_theme_cookie').value || 'en'
-const icon = ref(darkThemeFromCookie)
+const darkThemeFromCookie = useCookie('dark_theme_cookie').value || AppTheme.System
+const icon = ref(getIconBasedOnTheme(darkThemeFromCookie as AppTheme))
 
 watch(getTheme, (newTheme) => {
     icon.value = getIconBasedOnTheme(newTheme as AppTheme);
